@@ -1,0 +1,69 @@
+version: '3.2'
+
+
+
+networks:
+    postgres-net:
+        driver: bridge
+
+
+volumes:
+    postgres:
+        driver: local
+
+
+
+services:
+
+
+
+    postgres:
+        # https://hub.docker.com/_/postgres
+        image: postgres:12
+        #restart: always
+        #   volumes:
+        #       # sudo mkdir -p /var/goood/db
+        #       # cd /var/goood
+        #       # sudo chown ptaranov ./db/
+        #       # chown :ptaranov db
+        #       - postgres:/var/goood/db
+        volumes:
+            - postgres:/var/lib/postgresql/data
+        environment:
+            POSTGRES_DB: postgres
+            POSTGRES_USER: test1234
+            POSTGRES_PASSWORD: test1234
+            # command: postgres -c shared_buffers=512MB -c effective_cache_size=1536MB -c work_mem=2621kB -c maintenance_work_mem=128MB shm_size: '1gb'
+        ports:
+            - 5432:5432
+        networks:
+            - postgres-net
+
+
+
+    pgadmin:
+        # https://hub.docker.com/r/dpage/pgadmin4/
+        # https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html
+        #
+        #
+        # servers.json is meant to import/export db servers.
+        # To export servers.json:
+        #     docker exec -it basic_pgadmin_1 python ./setup.py --dump-servers /tmp/servers.json --user test1234@test.com
+        #     docker exec -it basic_pgadmin_1 cat /tmp/servers.json | tee ./servers.json
+        #
+        #
+        #
+        # To import servers.json:
+        #     Mount servres.json to /pgadmin4/servers.json
+        image: dpage/pgadmin4:2020-05-25-1
+        volumes:
+            - ./servers.json:/pgadmin4/servers.json # Assign pgadmin a list of DB servers here.
+
+        environment:
+            PGADMIN_DEFAULT_EMAIL: test1234@test.com
+            PGADMIN_DEFAULT_PASSWORD: test1234
+        ports:
+            - 11111:80
+        networks:
+            - postgres-net
+
