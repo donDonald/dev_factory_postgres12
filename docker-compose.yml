@@ -20,6 +20,7 @@ services:
     postgres:
         # https://hub.docker.com/_/postgres
         image: postgres:12
+        hostname: postgres
         #restart: always
         #   volumes:
         #       # sudo mkdir -p /var/goood/db
@@ -45,6 +46,7 @@ services:
         # https://hub.docker.com/r/dpage/pgadmin4/
         # https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html
         image: dpage/pgadmin4:2020-05-25-1
+        hostname: pgadmin
         volumes:
             - ./servers.json:/pgadmin4/servers.json # Assign pgadmin a list of DB servers here.
 
