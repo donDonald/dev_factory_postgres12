@@ -22,7 +22,8 @@ services:
         # https://hub.docker.com/_/postgres
         image: postgres:12
         hostname: postgres
-        #restart: always
+        container_name: postgres
+        restart: unless-stopped
         volumes:
             - postgres-data:/var/lib/postgresql/data
         environment:
@@ -42,6 +43,8 @@ services:
         # https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html
         image: dpage/pgadmin4:2020-05-25-1
         hostname: pgadmin
+        container_name: pgadmin
+        restart: unless-stopped
         volumes:
             - ./servers.json:/pgadmin4/servers.json # Assign pgadmin a list of DB servers here.
         environment:

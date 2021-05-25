@@ -11,10 +11,10 @@
 It's a docker-compose file containing next services:
 ```
 $ docker-compose ps
-              Name                             Command              State               Ports             
-----------------------------------------------------------------------------------------------------------
-dev-factory-postgres12_pgadmin_1    /entrypoint.sh                  Up      443/tcp, 0.0.0.0:11111->80/tcp
-dev-factory-postgres12_postgres_1   docker-entrypoint.sh postgres   Up      0.0.0.0:5432->5432/tcp  
+  Name                Command              State               Ports             
+---------------------------------------------------------------------------------
+pgadmin    /entrypoint.sh                  Up      443/tcp, 0.0.0.0:11111->80/tcp
+postgres   docker-entrypoint.sh postgres   Up      0.0.0.0:5432->5432/tcp 
 ```
 
 
@@ -36,9 +36,17 @@ Once this script is run it will append/remove entiries into /etc/hosts
 
 
 
+#### Updating /etc/hosts(Option B)
+```
+$ echo "$(docker exec -it pgadmin sh -c "hostname -i" | head -c-2) $(docker exec -it pgadmin sh -c "hostname" | head -c-2)" | sudo tee -a /etc/hosts
+$ echo "$(docker exec -it postgres sh -c "hostname -i" | head -c-2) $(docker exec -it postgres sh -c "hostname" | head -c-2)" | sudo tee -a /etc/hosts
+```
+
+
+
 ### To launch
 ```
-$ docker-compose up -d --build
+$ docker-compose up
 ```
 Ensure /etc/hosts contains records for all containers
 
@@ -52,7 +60,7 @@ $ docker-compose down
 
 
 ### Web services
-- [pgadmin](http://localhost:11111)\
+- [localhost:11111](http://localhost:11111)\
     User: test1234@test.com\
     Password: test1234
 
@@ -63,8 +71,8 @@ servers.json is meant for importing/exporting db servers setup into pgadmin
 
 To export servers.json
 ```
-$ docker exec -it dev-factory-postgres12_pgadmin_1 python ./setup.py --dump-servers /tmp/servers.json --user test1234@test.com
-$ docker exec -it dev-factory-postgres12_pgadmin_1 cat /tmp/servers.json
+$ docker exec -it pgadmin python ./setup.py --dump-servers /tmp/servers.json --user test1234@test.com
+$ docker exec -it pgadmin cat /tmp/servers.json
 ``` 
 
 To import servers.json mount servres.json to /pgadmin4/servers.json
