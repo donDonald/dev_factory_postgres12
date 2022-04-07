@@ -1,10 +1,21 @@
-# Postgers 12 and pgadmin4
+<div align="center">
+    <img src="images/license-MIT-blue.svg">
+</div>
+
+# Intro
+Postgers 12 and pgadmin4
+
+---
 
 
+# Use-cases
+- As a developer I and need quckly setup postgres db with pgadmin
 
-### Use-cases
-- I'm a developer and need quckly postgres db with pgadmin
+<div align="center">
+    <img src="images/use_cases.png">
+</div>
 
+---
 
 
 ### Details
@@ -17,12 +28,14 @@ pgadmin    /entrypoint.sh                  Up      443/tcp, 0.0.0.0:11111->80/tc
 postgres   docker-entrypoint.sh postgres   Up      0.0.0.0:5432->5432/tcp 
 ```
 
+---
 
 
 ### Cridentials
 All cridentials to pg and pgadmin are located here in .env file\
 If you want to change cridentials - simply edit .env
 
+---
 
 
 ### Updating /etc/hosts
@@ -42,6 +55,7 @@ $ echo "$(docker exec -it pgadmin sh -c "hostname -i" | head -c-2) $(docker exec
 $ echo "$(docker exec -it postgres sh -c "hostname -i" | head -c-2) $(docker exec -it postgres sh -c "hostname" | head -c-2)" | sudo tee -a /etc/hosts
 ```
 
+---
 
 
 ### To launch
@@ -50,6 +64,7 @@ $ docker-compose up
 ```
 Ensure /etc/hosts contains records for all containers
 
+---
 
 
 ### To shutdown
@@ -57,6 +72,7 @@ Ensure /etc/hosts contains records for all containers
 $ docker-compose down
 ```
 
+---
 
 
 ### Web services
@@ -64,6 +80,7 @@ $ docker-compose down
     User: test1234@test.com\
     Password: test1234
 
+---
 
 
 ### sevrers.json
@@ -77,28 +94,29 @@ $ docker exec -it pgadmin cat /tmp/servers.json
 
 To import servers.json mount servres.json to /pgadmin4/servers.json
 
+---
+
 
 ### Screenshots
 
 #### Login page
-<p align="center">
-    <img width="900" height="600" src="pic1.png">
-</p>
-<br>
+<div align="center">
+    <img width="900" height="600" src="images/pic1.png">
+</div>
+
 
 
 
 #### DB login
-<p align="center">
-    <img width="900" height="600" src="pic2.png">
-</p>
-<br>
+<div align="center">
+    <img width="900" height="600" src="images/pic2.png">
+</div>
+
 
 
 
 #### DB view
-<p align="center">
-    <img width="900" height="600" src="pic3.png">
-</p>
-<br>
+<div align="center">
+    <img width="900" height="600" src="images/pic3.png">
+</div>
 
